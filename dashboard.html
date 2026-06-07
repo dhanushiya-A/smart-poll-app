@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Poll — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">📊</span>
+        <div>
+          <h1>Smart Poll</h1>
+          <p>Live polling dashboard</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="button button-ghost" href="index.html">Home</a>
+      </div>
+    </header>
+
+    <main class="layout-grid">
+      <section class="panel panel-large glass-card">
+        <div class="panel-header">
+          <div>
+            <h2>Active Polls</h2>
+            <p>Vote and watch live results update.</p>
+          </div>
+          <div class="search-group">
+            <input id="pollSearch" type="search" placeholder="Search polls..." />
+            <select id="categoryFilter" class="category-filter">
+              <option value="All">All Categories</option>
+              <option value="General">General</option>
+              <option value="Business">Business</option>
+              <option value="Technology">Technology</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Community">Community</option>
+            </select>
+          </div>
+        </div>
+        <div id="pollList" class="poll-list"></div>
+      </section>
+
+      <section class="panel panel-small glass-card">
+        <div class="panel-header">
+          <h2>Trending Polls</h2>
+          <p>Most active polls right now.</p>
+        </div>
+        <ul id="trendingList" class="leaderboard-list"></ul>
+      </section>
+
+      <section class="panel panel-small glass-card">
+        <div class="panel-header">
+          <h2>Create New Poll</h2>
+          <p>Add a poll to the platform.</p>
+        </div>
+        <form id="pollForm" class="poll-form">
+          <label>
+            Poll Title
+            <input id="pollTitle" required type="text" placeholder="Your question here" />
+          </label>
+          <label>
+            Options (comma separated)
+            <input id="pollOptions" required type="text" placeholder="Option 1, Option 2, Option 3" />
+          </label>
+          <label>
+            Duration (seconds)
+            <input id="pollDuration" required type="number" min="10" value="40" />
+          </label>
+          <label>
+            Category
+            <select id="pollCategory" required>
+              <option value="General">General</option>
+              <option value="Business">Business</option>
+              <option value="Technology">Technology</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Community">Community</option>
+            </select>
+          </label>
+          <button type="submit" class="button button-primary">Create Poll</button>
+        </form>
+      </section>
+
+      <section class="panel panel-large glass-card">
+        <div class="panel-header">
+          <div>
+            <h2>Live Q&amp;A</h2>
+            <p>Vote, pin, and discuss audience questions.</p>
+          </div>
+          <div class="question-count"><span id="questionCount">0</span> questions</div>
+        </div>
+        <form id="questionForm" class="poll-form question-form">
+          <label>
+            Ask a Question
+            <input id="questionText" required type="text" placeholder="Type your question..." />
+          </label>
+          <div class="question-actions-group">
+            <button type="submit" class="button button-primary">Ask Community</button>
+            <button id="askAiButton" type="button" class="button button-secondary">Ask AI</button>
+          </div>
+          <div id="aiResponse" class="ai-response" aria-live="polite"></div>
+        </form>
+        <div id="questionList" class="question-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="pollTemplate">
+    <article class="poll-card">
+      <div class="poll-header">
+        <div>
+          <h3 class="poll-title"></h3>
+          <p class="poll-timer"></p>
+        </div>
+        <div class="poll-meta">
+          <span class="poll-votes"></span>
+          <span class="badge category-badge"></span>
+        </div>
+      </div>
+
+      <div class="options-list"></div>
+      <div class="poll-footer">
+        <span class="winner-badge"></span>
+        <div class="card-actions">
+          <button class="button button-soft share-button" type="button">Share</button>
+          <button class="button button-soft export-button" type="button">Export PDF</button>
+          <button class="button button-danger delete-button" type="button">Delete</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <template id="questionTemplate">
+    <article class="question-card">
+      <div class="question-text"></div>
+      <div class="question-meta">
+        <span class="badge pinned-badge">Pinned</span>
+        <div>
+          <button class="icon-button upvote">▲</button>
+          <span class="vote-count"></span>
+          <button class="icon-button downvote">▼</button>
+        </div>
+      </div>
+      <div class="question-actions">
+        <button class="button button-soft pin-button">Pin</button>
+        <button class="button button-danger delete-button">Delete</button>
+      </div>
+    </article>
+  </template>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
